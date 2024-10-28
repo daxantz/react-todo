@@ -1,0 +1,15 @@
+.Dropdown {
+  width: 184px;
+}
+.menu {
+  border-radius: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle drop shadow */
+  border: gray;
+}
+.MenuItem {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  white-space: nowrap;
+  padding: 3px;
+}
