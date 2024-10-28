@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-export default function MenuItem({ option }) {
+export default function MenuItem({ option, type }) {
   return (
     <div className="MenuItem">
       <label htmlFor={option.name}>{option.name}</label>
-      <input type="radio" name="item" id={option.name} value={option.name} />
+      <input type={type} name="item" id={option.name} value={option.name} />
     </div>
   );
 }
