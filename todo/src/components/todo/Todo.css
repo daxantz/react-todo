@@ -1,0 +1,12 @@
+.Todo {
+  border: 2px solid black;
+  /* max-width: 398px; */
+  width: 50%;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    h1 {
+      font-size: 1rem;
+    }
+  }
+}
