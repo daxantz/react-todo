@@ -1,5 +1,5 @@
 .Dropdown {
-  width: 184px;
+  max-width: 25%;
 }
 .menu {
   border-radius: 14px;
