@@ -1,0 +1,10 @@
+.LevelSelector {
+  p {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+  .levels {
+    display: flex;
+    gap: 10px;
+  }
+}
