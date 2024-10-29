@@ -1,0 +1,16 @@
+.Circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  span {
+    font-size: 14px;
+  }
+  :hover {
+    cursor: pointer;
+  }
+}
