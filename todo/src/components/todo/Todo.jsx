@@ -1,12 +1,10 @@
 import "../todo/Todo.css";
 
-/* eslint-disable react/prop-types */
-
 export default function Todo({ todo }) {
   return (
     <div className="Todo">
       <div className="header">
-        <h1>{todo.title}</h1>
+        <h1>{todo.name}</h1>
         <div className="options">
           <button>Edit</button>
           <button>Mark Complete</button>
@@ -16,8 +14,9 @@ export default function Todo({ todo }) {
       <p>Priority: {todo.priority}</p>
       <p>Complexity: {todo.complexity}</p>
       <div className="tags">
-        <span>tag1</span>
-        <span>tag2</span>
+        {todo.tags.map((tag) => (
+          <span key={tag}>{tag}</span>
+        ))}
       </div>
     </div>
   );
