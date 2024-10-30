@@ -1,8 +1,8 @@
 import "../todo/Todo.css";
 
-export default function Todo({ todo }) {
+export default function Todo({ todo, handleClick }) {
   return (
-    <div className="Todo">
+    <div className="Todo" onClick={() => handleClick(todo.id)}>
       <div className="header">
         <h1>{todo.name}</h1>
         <div className="options">
