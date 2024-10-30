@@ -2,7 +2,7 @@ import Search from "../components/search/Search";
 import Dropdown from "../components/dropdown/Dropdown";
 import MenuItem from "../components/dropdown/MenuItem";
 import Todo from "../components/todo/Todo";
-export default function MainPage() {
+export default function MainPage({ todos }) {
   const sortOptions = [
     { name: "Default" },
     { name: "Ascending Date" },
@@ -12,12 +12,7 @@ export default function MainPage() {
     { name: "Ascending Priority" },
     { name: "Decending Priority" },
   ];
-  const todo = {
-    title: "First todo",
-    dueDate: "2/24/2024",
-    priority: "8/10",
-    complexity: "10/10",
-  };
+
   const filterOptions = [{ name: "tag1" }, { name: "tag2" }];
   return (
     <>
@@ -35,7 +30,9 @@ export default function MainPage() {
         </Dropdown>
       </div>
       <div className="todos">
-        <Todo todo={todo} />
+        {todos.map((todo) => (
+          <Todo key={todo.id} todo={todo} />
+        ))}
       </div>
       <button>+ Add New Task</button>
     </>
