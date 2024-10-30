@@ -2,7 +2,7 @@ import { useState } from "react";
 import LevelSelector from "../levelselector/LevelSelector";
 import Pageheader from "../pageheader/Pageheader";
 
-export default function Form({ task, setTodos }) {
+export default function Form({ task, setTodos, backToMain }) {
   const [formData, setFormData] = useState({
     taskName: "",
     Priority: "",
@@ -27,6 +27,10 @@ export default function Form({ task, setTodos }) {
           dueDate: formData.dueDate,
           time: formData.time,
           tags: formData.tags.split(","),
+          subtasks: [
+            // { text: "st1", id: 1 },
+            // { text: "st2", id: 2 },
+          ],
         },
       ];
     });
@@ -38,6 +42,7 @@ export default function Form({ task, setTodos }) {
       time: "",
       tags: "",
     });
+    backToMain();
   }
 
   function handleChange(e) {
@@ -51,7 +56,10 @@ export default function Form({ task, setTodos }) {
 
   return (
     <form action="" onSubmit={(e) => createTodo(e)}>
-      <Pageheader title={task ? "Edit Task" : "Add New Task"} />
+      <Pageheader
+        title={task ? "Edit Task" : "Add New Task"}
+        backToMain={backToMain}
+      />
       <div>
         <label htmlFor="taskName">Task Name</label>
         <input
