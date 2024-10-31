@@ -4,13 +4,23 @@ import MenuItem from "../components/dropdown/MenuItem";
 import Todo from "../components/todo/Todo";
 import TaskDetails from "./TaskDetails";
 import { useState } from "react";
-export default function MainPage({ todos, createTodo }) {
+import CreateTask from "./CreateTask";
+import Form from "../components/form/Form";
+export default function MainPage({ todos, setTodos, setStoredTodos }) {
   const [currentTodo, setCurrentTodo] = useState(null);
+  const [isCreatingTodo, setIsCreatingTodo] = useState(false);
+  function handleToggle() {
+    setIsCreatingTodo((previous) => !previous);
+  }
 
   function handleClick(id) {
     const currentTodo = todos.find((todo) => todo.id === id);
     setCurrentTodo(currentTodo);
     console.log("the current todo is : ", currentTodo);
+  }
+
+  function resetTodo() {
+    setCurrentTodo(null);
   }
   const sortOptions = [
     { name: "Default" },
@@ -26,7 +36,20 @@ export default function MainPage({ todos, createTodo }) {
   return (
     <>
       {currentTodo ? (
-        <TaskDetails todo={currentTodo} />
+        <TaskDetails
+          todo={currentTodo}
+          handleToggle={resetTodo}
+          setTodos={setTodos}
+          resetTodo={resetTodo}
+        />
+      ) : isCreatingTodo ? (
+        <CreateTask>
+          <Form
+            setTodos={setTodos}
+            backToMain={handleToggle}
+            setStoredTodos={setStoredTodos}
+          />
+        </CreateTask>
       ) : (
         <>
           <Search />
@@ -43,11 +66,11 @@ export default function MainPage({ todos, createTodo }) {
             </Dropdown>
           </div>
           <div className="todos">
-            {todos.map((todo) => (
+            {todos?.map((todo) => (
               <Todo key={todo.id} todo={todo} handleClick={handleClick} />
             ))}
           </div>
-          <button onClick={createTodo}>+ Add New Task</button>
+          <button onClick={handleToggle}>+ Add New Task</button>
         </>
       )}
     </>
