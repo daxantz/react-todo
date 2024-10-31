@@ -1,7 +1,12 @@
 import Pageheader from "../components/pageheader/Pageheader";
 import Todo from "../components/todo/Todo";
 import SubtaskItem from "../components/subtasks/SubtaskItem";
-export default function TaskDetails({ todo }) {
+export default function TaskDetails({
+  todo,
+  handleToggle,
+  setTodos,
+  resetTodo,
+}) {
   // const todo = {
   //   title: "First todo",
   //   dueDate: "2/24/2024",
@@ -15,9 +20,17 @@ export default function TaskDetails({ todo }) {
   //   ],
   // };
 
+  function deleteTodo(id) {
+    setTodos((prevTodos) => {
+      const filteredTodos = prevTodos.filter((todo) => todo.id !== id);
+      return filteredTodos;
+    });
+    resetTodo();
+  }
+
   return (
     <>
-      <Pageheader title={"Task Details"} />
+      <Pageheader title={"Task Details"} backToMain={handleToggle} />
       <Todo todo={todo} />
       <div className="subtasks">
         <h2>Checklist for subtasks</h2>
@@ -25,8 +38,8 @@ export default function TaskDetails({ todo }) {
           <SubtaskItem key={task.id} subtask={task} />
         ))}
       </div>
-      <button>Repeat Tasks</button>
-      <button>Delete Tasks</button>
+      <button>Repeat Task</button>
+      <button onClick={() => deleteTodo(todo.id)}>Delete Task</button>
     </>
   );
 }
