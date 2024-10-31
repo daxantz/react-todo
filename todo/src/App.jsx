@@ -1,18 +1,16 @@
+import useLocalStorage from "./hooks/useLocalStorage";
 import MainPage from "./pages/MainPage";
-import TaskDetails from "./pages/TaskDetails";
-import CreateTask from "./pages/CreateTask";
-import Form from "./components/form/Form";
-import { useState } from "react";
-function App() {
-  const [todos, setTodos] = useState([]);
 
+import { useEffect, useState } from "react";
+function App() {
+  const { setItem, getItem } = useLocalStorage("todos");
+  const [todos, setTodos] = useState(getItem() || []);
+  useEffect(() => {
+    setItem(todos);
+  }, [todos]);
   return (
     <>
-      <MainPage todos={todos} />
-      {/* <TaskDetails /> */}
-      <CreateTask>
-        <Form setTodos={setTodos} />
-      </CreateTask>
+      <MainPage todos={todos} setTodos={setTodos} />
     </>
   );
 }
