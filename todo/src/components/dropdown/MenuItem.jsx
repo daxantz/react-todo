@@ -1,9 +1,14 @@
-/* eslint-disable react/prop-types */
-export default function MenuItem({ option, type }) {
+export default function MenuItem({ option, type, handleChange }) {
   return (
     <div className="MenuItem">
       <label htmlFor={option.name}>{option.name}</label>
-      <input type={type} name="item" id={option.name} value={option.name} />
+      <input
+        onChange={(e) => handleChange(e)}
+        type={type}
+        name={"item"}
+        id={option.name}
+        value={option.value}
+      />
     </div>
   );
 }
