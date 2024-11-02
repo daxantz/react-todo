@@ -36,8 +36,8 @@ export default function Form({ task, setTodos, backToMain }) {
     });
     setFormData({
       taskName: "",
-      Priority: "",
-      Complexity: "",
+      Priority: null,
+      Complexity: null,
       dueDate: "",
       time: "",
       tags: "",
@@ -51,7 +51,7 @@ export default function Form({ task, setTodos, backToMain }) {
   }
 
   function setLevel(name, id) {
-    setFormData((prevData) => ({ ...prevData, [name]: `${id}/10` }));
+    setFormData((prevData) => ({ ...prevData, [name]: Number(id) }));
   }
 
   return (
