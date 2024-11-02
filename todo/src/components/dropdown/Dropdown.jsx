@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import { useState } from "react";
 import "../dropdown/Dropdown.css";
 export default function Dropdown({ title, children }) {
