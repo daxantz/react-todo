@@ -2,10 +2,10 @@ const sortOptions = [
   { name: "Default", value: "default" },
   { name: "Ascending Date", value: "dueDate" },
   { name: "Descending Date", value: "dueDate" },
-  { name: "Ascending Complexity", value: "complexity" },
-  { name: "Descending Complexity", value: "complexity" },
-  { name: "Ascending Priority", value: "priority" },
-  { name: "Descending Priority", value: "priority" },
+  { name: "Ascending Complexity", value: "Complexity" },
+  { name: "Descending Complexity", value: "Complexity" },
+  { name: "Ascending Priority", value: "Priority" },
+  { name: "Descending Priority", value: "Priority" },
 ];
 
 import Search from "../components/search/Search";
@@ -59,6 +59,7 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
           handleToggle={resetTodo}
           setTodos={setTodos}
           resetTodo={resetTodo}
+          todos={todos}
         />
       ) : isCreatingTodo ? (
         <CreateTask>
