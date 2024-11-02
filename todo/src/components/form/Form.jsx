@@ -21,9 +21,9 @@ export default function Form({ task, setTodos, backToMain }) {
         ...prevTodos,
         {
           id: Date.now(),
-          name: formData.taskName,
-          priority: formData.Priority,
-          complexity: formData.Complexity,
+          taskName: formData.taskName,
+          Priority: formData.Priority,
+          Complexity: formData.Complexity,
           dueDate: formData.dueDate,
           time: formData.time,
           tags: formData.tags.split(","),
