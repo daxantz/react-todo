@@ -1,3 +1,13 @@
+const sortOptions = [
+  { name: "Default", value: "default" },
+  { name: "Ascending Date", value: "dueDate" },
+  { name: "Descending Date", value: "dueDate" },
+  { name: "Ascending Complexity", value: "complexity" },
+  { name: "Descending Complexity", value: "complexity" },
+  { name: "Ascending Priority", value: "priority" },
+  { name: "Descending Priority", value: "priority" },
+];
+
 import Search from "../components/search/Search";
 import Dropdown from "../components/dropdown/Dropdown";
 import MenuItem from "../components/dropdown/MenuItem";
@@ -6,9 +16,26 @@ import TaskDetails from "./TaskDetails";
 import { useState } from "react";
 import CreateTask from "./CreateTask";
 import Form from "../components/form/Form";
+import { setSortArray } from "../../../utils";
 export default function MainPage({ todos, setTodos, setStoredTodos }) {
   const [currentTodo, setCurrentTodo] = useState(null);
   const [isCreatingTodo, setIsCreatingTodo] = useState(false);
+  const [selectedValue, setSelectedValue] = useState();
+  const [tempTodos, setTempTodos] = useState([...todos]);
+
+  function handleChange(event) {
+    setSelectedValue(event.target.value);
+
+    setTempTodos(() => {
+      return setSortArray(
+        event.target.value,
+        event.target.id.split(" ")[0],
+        todos
+      );
+    });
+    console.log("temp todos", tempTodos);
+  }
+
   function handleToggle() {
     setIsCreatingTodo((previous) => !previous);
   }
@@ -22,15 +49,6 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
   function resetTodo() {
     setCurrentTodo(null);
   }
-  const sortOptions = [
-    { name: "Default" },
-    { name: "Ascending Date" },
-    { name: "Decending Date" },
-    { name: "Ascending Complexity" },
-    { name: "Decending Complexity" },
-    { name: "Ascending Priority" },
-    { name: "Decending Priority" },
-  ];
 
   const filterOptions = [{ name: "tag1" }, { name: "tag2" }];
   return (
@@ -56,19 +74,28 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
           <div className="filters">
             <Dropdown title={"Sort"}>
               {sortOptions.map((option) => (
-                <MenuItem key={option.name} option={option} type={"radio"} />
+                <MenuItem
+                  key={option.name}
+                  option={option}
+                  type={"radio"}
+                  handleChange={handleChange}
+                />
               ))}
             </Dropdown>
-            <Dropdown title={"Filter"}>
+            <Dropdown title={"Filter"} handleChange={handleChange}>
               {filterOptions.map((option) => (
                 <MenuItem key={option.name} option={option} type={"checkbox"} />
               ))}
             </Dropdown>
           </div>
           <div className="todos">
-            {todos?.map((todo) => (
-              <Todo key={todo.id} todo={todo} handleClick={handleClick} />
-            ))}
+            {selectedValue
+              ? tempTodos.map((todo) => (
+                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
+                ))
+              : todos.map((todo) => (
+                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
+                ))}
           </div>
           <button onClick={handleToggle}>+ Add New Task</button>
         </>
