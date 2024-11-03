@@ -1,6 +1,6 @@
 import useLocalStorage from "./hooks/useLocalStorage";
 import MainPage from "./pages/MainPage";
-
+import Wrapper from "./components/wrapper/Wrapper";
 import { useEffect, useState } from "react";
 function App() {
   const { setItem, getItem } = useLocalStorage("todos");
@@ -10,7 +10,9 @@ function App() {
   }, [todos]);
   return (
     <>
-      <MainPage todos={todos} setTodos={setTodos} />
+      <Wrapper>
+        <MainPage todos={todos} setTodos={setTodos} />
+      </Wrapper>
     </>
   );
 }
