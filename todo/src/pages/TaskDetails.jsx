@@ -38,7 +38,7 @@ export default function TaskDetails({
       ) : (
         <>
           <Pageheader title={"Task Details"} backToMain={handleToggle} />
-          <Todo todo={todo} handleEditTodo={handleSetEditing} />
+          <Todo todo={todo} handleEditTodo={handleSetEditing} todos={todos} />
 
           <div className="subtasks">
             <h2>Checklist for subtasks</h2>
