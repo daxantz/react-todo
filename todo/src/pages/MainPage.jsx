@@ -22,7 +22,8 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
   const [isCreatingTodo, setIsCreatingTodo] = useState(false);
   const [selectedValue, setSelectedValue] = useState();
   const [tempTodos, setTempTodos] = useState([...todos]);
-
+  const [search, setSearch] = useState("");
+  const [searchedTodos, setSearchedTodos] = useState([...todos]);
   function handleChange(event) {
     setSelectedValue(event.target.value);
 
@@ -71,8 +72,17 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
         </CreateTask>
       ) : (
         <>
-          <Search />
-          <div className="filters">
+          <Search
+            search={search}
+            setSearch={setSearch}
+            searchTodos={searchedTodos}
+            setSearchedTodos={setSearchedTodos}
+            todos={todos}
+          />
+          <div
+            className="filters"
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
             <Dropdown title={"Sort"}>
               {sortOptions.map((option) => (
                 <MenuItem
@@ -90,13 +100,24 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
             </Dropdown>
           </div>
           <div className="todos">
-            {selectedValue
+            {searchedTodos.length > 0
+              ? searchedTodos.map((todo) => (
+                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
+                ))
+              : selectedValue
               ? tempTodos.map((todo) => (
                   <Todo key={todo.id} todo={todo} handleClick={handleClick} />
                 ))
               : todos.map((todo) => (
                   <Todo key={todo.id} todo={todo} handleClick={handleClick} />
                 ))}
+            {/* {selectedValue
+              ? tempTodos.map((todo) => (
+                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
+                ))
+              : todos.map((todo) => (
+                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
+                ))} */}
           </div>
           <button onClick={handleToggle}>+ Add New Task</button>
         </>
