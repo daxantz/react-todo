@@ -11,17 +11,21 @@ export default function EditForm({ todoid, setTodos, setIsEditing, todos }) {
     Complexity: currentTodo.Complexity,
     dueDate: currentTodo.dueDate,
     time: currentTodo.time,
-    tags: currentTodo.tags,
+    tags: currentTodo.tags.toString(),
     subtasks: currentTodo.subtasks,
   });
 
   function editTodo(e, formData) {
     e.preventDefault();
-
+    const updateFormData = {
+      ...formData,
+      tags: formData.tags.split(","),
+    };
+    console.log("updated form data", updateFormData);
     setTodos((prevTodos) => {
       return prevTodos.map((t) => {
         if (t.id === todoid) {
-          return { ...t, ...formData };
+          return { ...t, ...updateFormData };
         } else {
           return t;
         }
@@ -90,7 +94,7 @@ export default function EditForm({ todoid, setTodos, setIsEditing, todos }) {
           type="text"
           placeholder="Tag1, Tag2, Tag3"
           onChange={handleChange}
-          value={formData.tags}
+          value={formData.tags.toString()}
         />
       </div>
       <button>Save Task</button>
