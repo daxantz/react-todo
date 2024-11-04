@@ -102,14 +102,29 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
           <div className="todos">
             {searchedTodos.length > 0
               ? searchedTodos.map((todo) => (
-                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
+                  <Todo
+                    key={todo.id}
+                    todo={todo}
+                    handleClick={handleClick}
+                    todoId={todo.id}
+                  />
                 ))
               : selectedValue
               ? tempTodos.map((todo) => (
-                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
+                  <Todo
+                    key={todo.id}
+                    todo={todo}
+                    handleClick={handleClick}
+                    todoId={todos.id}
+                  />
                 ))
               : todos.map((todo) => (
-                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
+                  <Todo
+                    key={todo.id}
+                    todo={todo}
+                    handleClick={handleClick}
+                    todoId={todo.id}
+                  />
                 ))}
             {/* {selectedValue
               ? tempTodos.map((todo) => (
