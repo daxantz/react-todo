@@ -7,9 +7,17 @@ export default function Circle({
   currentLevel,
   name,
   setLevel,
+  size,
 }) {
   return (
-    <div className={`Circle `} style={{ backgroundColor: color }}>
+    <div
+      className={`Circle `}
+      style={{
+        backgroundColor: color,
+        width: `${size}px`,
+        height: `${size}px`,
+      }}
+    >
       {level && (
         <span
           className={`${level === currentLevel ? "Selected" : ""}`}
