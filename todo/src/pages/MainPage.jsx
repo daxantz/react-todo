@@ -81,7 +81,7 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
           />
           <div
             className="filters"
-            style={{ display: "flex", justifyContent: "space-between" }}
+            style={{ display: "flex", justifyContent: "space-around" }}
           >
             <Dropdown title={"Sort"}>
               {sortOptions.map((option) => (
@@ -119,7 +119,20 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
                   <Todo key={todo.id} todo={todo} handleClick={handleClick} />
                 ))} */}
           </div>
-          <button onClick={handleToggle}>+ Add New Task</button>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <button
+              style={{
+                padding: "18px 137px",
+                backgroundColor: "#0D99FF",
+                color: "white",
+                borderRadius: "90px",
+                border: "none",
+              }}
+              onClick={handleToggle}
+            >
+              + Add New Task
+            </button>
+          </div>
         </>
       )}
     </>
