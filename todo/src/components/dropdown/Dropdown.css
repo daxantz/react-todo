@@ -1,10 +1,19 @@
 .Dropdown {
-  max-width: 25%;
+  max-width: 50%;
+  position: relative;
+
+  button {
+    width: 200px;
+    border-radius: 60px;
+    padding: 10px 43px;
+  }
 }
 .menu {
+  position: absolute;
+
   border-radius: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle drop shadow */
-  border: gray;
+  background-color: white;
 }
 .MenuItem {
   display: flex;
