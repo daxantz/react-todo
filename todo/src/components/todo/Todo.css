@@ -1,17 +1,51 @@
 .Todo {
-  border: 2px solid black;
   /* max-width: 398px; */
-
+  padding: 1rem;
+  border-radius: 18px;
+  margin-bottom: 25px;
+  background-color: white;
   .header {
     display: flex;
     justify-content: space-between;
     h1 {
-      font-size: 1rem;
+      font-size: 1.25rem;
+      line-height: 20px;
+      margin: 0;
     }
+
+    .todo-name {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+  }
+
+  .body {
+    .info-text {
+      font-weight: 400;
+      font-size: 0.875rem;
+    }
+    .info-span {
+      color: gray;
+    }
+  }
+
+  .info-text:first-of-type span:nth-of-type(2) {
+    color: #0d99ff;
+  }
+
+  .tags {
+    display: flex;
+    gap: 20px;
+  }
+
+  .tag {
+    padding: 0.5rem;
+    border-radius: 60px;
   }
 }
 .done {
-  background-color: rgb(188, 234, 188);
+  background-color: #ecf8f9;
   h1 {
     text-decoration: line-through;
   }
