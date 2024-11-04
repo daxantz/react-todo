@@ -2,6 +2,7 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import MainPage from "./pages/MainPage";
 import Wrapper from "./components/wrapper/Wrapper";
 import { useEffect, useState } from "react";
+import "../src/styles.css";
 function App() {
   const { setItem, getItem } = useLocalStorage("todos");
   const [todos, setTodos] = useState(getItem() || []);
