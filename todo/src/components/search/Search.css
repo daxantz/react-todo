@@ -1,7 +1,24 @@
 .Search {
+  .input-wrapper {
+    position: relative;
+    .icon {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      width: 24px;
+      height: 24px;
+    }
+    .icon-2 {
+      position: absolute;
+      top: 15px;
+      right: 5px;
+      width: 36px;
+      height: 36px;
+    }
+  }
   input {
     border-radius: 60px;
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 3rem;
   }
 }
