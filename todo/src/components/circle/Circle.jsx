@@ -7,15 +7,18 @@ export default function Circle({
   currentLevel,
   name,
   setLevel,
-  size,
+  styles,
+  width,
+  height,
 }) {
   return (
     <div
       className={`Circle `}
       style={{
         backgroundColor: color,
-        width: `${size}px`,
-        height: `${size}px`,
+        width: `${width}px`,
+        height: `${height}px`,
+        padding: styles?.padding,
       }}
     >
       {level && (
