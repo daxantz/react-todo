@@ -1,4 +1,7 @@
 .Wrapper {
-  margin: 0 auto;
+  margin: 100px auto;
   max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
