@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LevelSelector from "../levelselector/LevelSelector";
 import Pageheader from "../pageheader/Pageheader";
-
+import "../form/Form.css";
 export default function Form({ task, setTodos, backToMain }) {
   const [formData, setFormData] = useState({
     taskName: "",
@@ -55,12 +55,12 @@ export default function Form({ task, setTodos, backToMain }) {
   }
 
   return (
-    <form action="" onSubmit={(e) => createTodo(e)}>
+    <form className="Form" action="" onSubmit={(e) => createTodo(e)}>
       <Pageheader
         title={task ? "Edit Task" : "Add New Task"}
         backToMain={backToMain}
       />
-      <div>
+      <div className="name-input">
         <label htmlFor="taskName">Task Name</label>
         <input
           name="taskName"
@@ -80,17 +80,19 @@ export default function Form({ task, setTodos, backToMain }) {
           <input
             id="dueDate"
             name="dueDate"
-            type="date"
+            type="text"
             onChange={handleChange}
             value={formData.dueDate}
+            placeholder="dd.mm.yyyy"
           />
         </div>
         <div>
           <label htmlFor="time">Select Time</label>
           <input
             id="time"
-            type="time"
+            type="text"
             name="time"
+            placeholder="00:00"
             onChange={handleChange}
             value={formData.time}
           />
