@@ -4,6 +4,8 @@ import SubtaskItem from "../components/subtasks/SubtaskItem";
 import { useState } from "react";
 
 import EditForm from "../components/form/EditForm";
+import Delete from "../components/icons/Delete";
+import Refresh from "../components/icons/Refresh";
 export default function TaskDetails({
   todo,
   handleToggle,
@@ -51,8 +53,32 @@ export default function TaskDetails({
               <SubtaskItem key={task.id} subtask={task} />
             ))}
           </div>
-          <button>Repeat Task</button>
-          <button onClick={() => deleteTodo(todo.id)}>Delete Task</button>
+          <button
+            className="btn"
+            style={{
+              padding: "18px 137px",
+              backgroundColor: "#0D99FF",
+              color: "white",
+              borderRadius: "90px",
+              border: "none",
+            }}
+          >
+            <Refresh />
+            <span style={{ marginLeft: "10px" }}>Repeat Task</span>
+          </button>
+          <button
+            className="btn"
+            style={{
+              padding: "18px 137px",
+              backgroundColor: "#FFE0DE",
+
+              borderRadius: "90px",
+              border: "none",
+            }}
+            onClick={() => deleteTodo(todo.id)}
+          >
+            <Delete /> Delete Task
+          </button>
         </>
       )}
     </>
