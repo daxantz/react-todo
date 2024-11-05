@@ -1,6 +1,7 @@
 export default function Edit({ handleEditTodo }) {
   return (
     <svg
+      className="Edit"
       width="32"
       height="32"
       viewBox="0 0 32 32"
