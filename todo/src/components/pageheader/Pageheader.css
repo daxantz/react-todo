@@ -1,8 +1,8 @@
 .Pageheader {
-  border: 2px solid black;
   display: flex;
   justify-content: space-around;
-  span {
-    align-self: center;
+  align-items: center;
+  h1 {
+    font-weight: 500;
   }
 }
