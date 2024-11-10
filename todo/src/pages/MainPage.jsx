@@ -7,7 +7,7 @@ const sortOptions = [
   { name: "Ascending Priority", value: "Priority" },
   { name: "Descending Priority", value: "Priority" },
 ];
-
+const filterOptions = [{ name: "tag1" }, { name: "tag2" }];
 import Search from "../components/search/Search";
 import Dropdown from "../components/dropdown/Dropdown";
 import MenuItem from "../components/dropdown/MenuItem";
@@ -17,6 +17,7 @@ import { useState } from "react";
 import CreateTask from "./CreateTask";
 import Form from "../components/form/Form";
 import { setSortArray } from "../../../utils";
+import usePowerMode from "../hooks/usePowerMode";
 export default function MainPage({ todos, setTodos, setStoredTodos }) {
   const [currentTodo, setCurrentTodo] = useState(null);
   const [isCreatingTodo, setIsCreatingTodo] = useState(false);
@@ -24,6 +25,7 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
   const [tempTodos, setTempTodos] = useState([...todos]);
   const [search, setSearch] = useState("");
   const [searchedTodos, setSearchedTodos] = useState([...todos]);
+  const [urgentTodo, setPowerMode, clearUrgentTodo] = usePowerMode(todos);
   function handleChange(event) {
     setSelectedValue(event.target.value);
 
@@ -51,7 +53,6 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
     setCurrentTodo(null);
   }
 
-  const filterOptions = [{ name: "tag1" }, { name: "tag2" }];
   return (
     <>
       {currentTodo ? (
@@ -99,43 +100,51 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
               ))}
             </Dropdown>
           </div>
-          <div className="todos">
-            {searchedTodos.length > 0
-              ? searchedTodos.map((todo) => (
-                  <Todo
-                    key={todo.id}
-                    todo={todo}
-                    handleClick={handleClick}
-                    todoId={todo.id}
-                  />
-                ))
-              : selectedValue
-              ? tempTodos.map((todo) => (
-                  <Todo
-                    key={todo.id}
-                    todo={todo}
-                    handleClick={handleClick}
-                    todoId={todos.id}
-                  />
-                ))
-              : todos.map((todo) => (
-                  <Todo
-                    key={todo.id}
-                    todo={todo}
-                    handleClick={handleClick}
-                    todoId={todo.id}
-                  />
-                ))}
-            {/* {selectedValue
-              ? tempTodos.map((todo) => (
-                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
-                ))
-              : todos.map((todo) => (
-                  <Todo key={todo.id} todo={todo} handleClick={handleClick} />
-                ))} */}
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          {urgentTodo ? (
+            <Todo todo={urgentTodo} todoId={urgentTodo.id} />
+          ) : (
+            <div className="todos">
+              {searchedTodos.length > 0
+                ? searchedTodos.map((todo) => (
+                    <Todo
+                      key={todo.id}
+                      todo={todo}
+                      handleClick={handleClick}
+                      todoId={todo.id}
+                      setTodos={setTodos}
+                    />
+                  ))
+                : selectedValue
+                ? tempTodos.map((todo) => (
+                    <Todo
+                      key={todo.id}
+                      todo={todo}
+                      handleClick={handleClick}
+                      todoId={todo.id}
+                      setTodos={setTodos}
+                    />
+                  ))
+                : todos.map((todo) => (
+                    <Todo
+                      key={todo.id}
+                      todo={todo}
+                      handleClick={handleClick}
+                      todoId={todo.id}
+                      setTodos={setTodos}
+                    />
+                  ))}
+            </div>
+          )}
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
             <button
+              className="btn"
               style={{
                 padding: "18px 137px",
                 backgroundColor: "#0D99FF",
@@ -146,6 +155,19 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
               onClick={handleToggle}
             >
               + Add New Task
+            </button>
+            <button
+              onClick={!urgentTodo ? setPowerMode : clearUrgentTodo}
+              className="btn"
+              style={{
+                padding: "18px 137px",
+                backgroundColor: "#0D99FF",
+                color: "white",
+                borderRadius: "90px",
+                border: "none",
+              }}
+            >
+              {!urgentTodo ? "Power Mode On" : "Power Mode Off"}
             </button>
           </div>
         </>
