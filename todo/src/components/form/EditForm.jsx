@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LevelSelector from "../levelselector/LevelSelector";
 import Pageheader from "../pageheader/Pageheader";
-
+import "../form/Form.css";
 export default function EditForm({ todoid, setTodos, setIsEditing, todos }) {
   const currentTodo = todos.find((t) => t.id === todoid);
   const [formData, setFormData] = useState({
@@ -20,6 +20,8 @@ export default function EditForm({ todoid, setTodos, setIsEditing, todos }) {
     const updateFormData = {
       ...formData,
       tags: formData.tags.split(","),
+      urgency: formData.Complexity + formData.Priority,
+      isCompleted: null,
     };
     console.log("updated form data", updateFormData);
     setTodos((prevTodos) => {
@@ -44,9 +46,9 @@ export default function EditForm({ todoid, setTodos, setIsEditing, todos }) {
   }
 
   return (
-    <form action="" onSubmit={(e) => editTodo(e, formData)}>
+    <form className="Form" action="" onSubmit={(e) => editTodo(e, formData)}>
       <Pageheader title={"Edit Task"} />
-      <div>
+      <div className="name-input">
         <label htmlFor="taskName">Task Name</label>
         <input
           name="taskName"
@@ -66,17 +68,19 @@ export default function EditForm({ todoid, setTodos, setIsEditing, todos }) {
           <input
             id="dueDate"
             name="dueDate"
-            type="date"
+            type="text"
             onChange={handleChange}
             value={formData.dueDate}
+            placeholder="dd.mm.yyyy"
           />
         </div>
         <div>
           <label htmlFor="time">Select Time</label>
           <input
             id="time"
-            type="time"
+            type="text"
             name="time"
+            placeholder="00:00"
             onChange={handleChange}
             value={formData.time}
           />
