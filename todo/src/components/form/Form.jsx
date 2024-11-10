@@ -31,6 +31,8 @@ export default function Form({ task, setTodos, backToMain }) {
             // { text: "st1", id: 1 },
             // { text: "st2", id: 2 },
           ],
+          urgency: formData.Complexity + formData.Priority,
+          isCompleted: false,
         },
       ];
     });
