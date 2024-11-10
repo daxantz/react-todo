@@ -19,7 +19,6 @@ export default function Search({ search, setSearch, todos, setSearchedTodos }) {
           onChange={handleSearch}
           value={search}
         />
-        <span className="icon-2">➡️</span>
       </div>
     </form>
   );
