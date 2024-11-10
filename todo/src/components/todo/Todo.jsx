@@ -19,6 +19,9 @@ export default function Todo({
   const [differenceInDays, setDifferenceInDays] = useState();
   function markComplete() {
     setIsComplete((previous) => !previous);
+    setCurrentTodo((prevTodo) => {
+      return { ...prevTodo, isCompleted: isComplete };
+    });
   }
 
   useEffect(() => {
@@ -99,18 +102,7 @@ export default function Todo({
           {`(${currentTodo.Complexity}/10)`}
         </p>
         <div className="tags">
-          {/* {currentTodo.tags.map((tag) => (
-            <Circle
-              key={tag}
-              level={tag}
-              color={"red"}
-              width={50}
-              styles={{ padding: "6px 8px" }}
-            />
-            <span key={tag}>{tag}</span>
-            
-          ))} */}
-          {Array.isArray(currentTodo.tags) ? (
+          {currentTodo.tags ? (
             currentTodo.tags.map((tag) => (
               <span
                 style={{
@@ -125,7 +117,7 @@ export default function Todo({
               </span>
             ))
           ) : (
-            <span>No tags available</span> // Fallback if tags are not an array
+            <span>No tags available</span>
           )}
         </div>
       </div>
