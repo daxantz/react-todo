@@ -1,11 +1,12 @@
 import Back from "../icons/Back";
 import "../pageheader/Pageheader.css";
-
-export default function Pageheader({ title, backToMain }) {
+import { useNavigate } from "react-router-dom";
+export default function Pageheader({ title }) {
+  const navigate = useNavigate();
   return (
     <header className="Pageheader">
       {/* <span onClick={backToMain}>⬅️</span> */}
-      <Back backToMain={backToMain} />
+      <Back backToMain={navigate} />
       <h1>{title}</h1>
       <span>✏️</span>
     </header>
