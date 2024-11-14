@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LevelSelector from "../levelselector/LevelSelector";
 import Pageheader from "../pageheader/Pageheader";
 import "../form/Form.css";
-export default function Form({ task, setTodos, backToMain }) {
+import { TodoContext } from "../../../../utils";
+import { useNavigate } from "react-router-dom";
+export default function Form() {
+  const { setValue } = useContext(TodoContext);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     taskName: "",
     Priority: "",
@@ -16,7 +20,7 @@ export default function Form({ task, setTodos, backToMain }) {
     e.preventDefault();
 
     console.log(formData);
-    setTodos((prevTodos) => {
+    setValue((prevTodos) => {
       return [
         ...prevTodos,
         {
@@ -44,7 +48,7 @@ export default function Form({ task, setTodos, backToMain }) {
       time: "",
       tags: "",
     });
-    backToMain();
+    navigate(-1);
   }
 
   function handleChange(e) {
@@ -58,10 +62,7 @@ export default function Form({ task, setTodos, backToMain }) {
 
   return (
     <form className="Form" action="" onSubmit={(e) => createTodo(e)}>
-      <Pageheader
-        title={task ? "Edit Task" : "Add New Task"}
-        backToMain={backToMain}
-      />
+      <Pageheader title={"Add New Task"} backToMain={navigate} />
       <div className="name-input">
         <label htmlFor="taskName">Task Name</label>
         <input

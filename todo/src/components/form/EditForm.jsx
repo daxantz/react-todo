@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LevelSelector from "../levelselector/LevelSelector";
 import Pageheader from "../pageheader/Pageheader";
 import "../form/Form.css";
-export default function EditForm({ todoid, setTodos, setIsEditing, todos }) {
-  const currentTodo = todos.find((t) => t.id === todoid);
+import { TodoContext } from "../../../../utils";
+import { useNavigate, useParams } from "react-router-dom";
+export default function EditForm() {
+  const { value, setValue } = useContext(TodoContext);
+  const { todoid } = useParams();
+  const currentTodo = value.find((t) => t.id === Number(todoid));
+  const navigate = useNavigate();
+  console.log(currentTodo);
   const [formData, setFormData] = useState({
-    id: todoid,
+    id: Number(todoid),
     taskName: currentTodo.taskName,
     Priority: currentTodo.Priority,
     Complexity: currentTodo.Complexity,
@@ -24,16 +30,16 @@ export default function EditForm({ todoid, setTodos, setIsEditing, todos }) {
       isCompleted: null,
     };
     console.log("updated form data", updateFormData);
-    setTodos((prevTodos) => {
+    setValue((prevTodos) => {
       return prevTodos.map((t) => {
-        if (t.id === todoid) {
+        if (t.id === Number(todoid)) {
           return { ...t, ...updateFormData };
         } else {
           return t;
         }
       });
     });
-    setIsEditing((previous) => !previous);
+    navigate(-1);
   }
 
   function handleChange(e) {
