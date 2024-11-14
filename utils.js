@@ -1,3 +1,5 @@
+import { createContext } from "react";
+
 export function setSortArray(value, sortOrder, todos) {
   let array = [...todos];
   if (sortOrder === "Ascending") {
@@ -29,3 +31,14 @@ export function setSortArray(value, sortOrder, todos) {
   console.log(value, sortOrder, array);
   return array;
 }
+
+export function calcDate(duedate) {
+  const targetDate = new Date(duedate);
+  const today = new Date();
+  const differenceInTime = targetDate - today;
+
+  const differenceInDays = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
+  return differenceInDays;
+}
+
+export const TodoContext = createContext(undefined);
