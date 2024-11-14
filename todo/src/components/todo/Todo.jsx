@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import "../todo/Todo.css";
 import Up from "../icons/Up";
 import Calendar from "../icons/Calendar";
@@ -6,43 +6,21 @@ import Move from "../icons/Move";
 import Edit from "../icons/Edit";
 import Check from "../icons/Check";
 import Circle from "../circle/Circle";
+import { Link, useParams } from "react-router-dom";
+import { calcDate, TodoContext } from "../../../../utils";
 const tagColors = ["#ECFFE8", "#FFF6E8", "#E8FEFF"];
-export default function Todo({
-  todo,
-  handleClick,
-  handleEditTodo,
-  todos,
-  todoId,
-}) {
+export default function Todo({ todoId }) {
+  const { todoid } = useParams();
+  const { value } = useContext(TodoContext);
   const [isComplete, setIsComplete] = useState(false);
-  const [currentTodo, setCurrentTodo] = useState(todo);
-  const [differenceInDays, setDifferenceInDays] = useState();
+
   function markComplete() {
     setIsComplete((previous) => !previous);
-    setCurrentTodo((prevTodo) => {
-      return { ...prevTodo, isCompleted: isComplete };
-    });
   }
 
-  useEffect(() => {
-    console.log(todos);
-    if (todos) {
-      let currentTodo = todos.find((t) => t.id === todoId);
-      setCurrentTodo(currentTodo);
-      console.log("current todo", currentTodo);
-    }
-    function calcDate() {
-      const targetDate = new Date(currentTodo.dueDate);
-      const today = new Date();
-      const differenceInTime = targetDate - today;
-
-      const differenceInDays = Math.ceil(
-        differenceInTime / (1000 * 60 * 60 * 24)
-      );
-      setDifferenceInDays(differenceInDays);
-    }
-    calcDate();
-  }, [todos, todoId, todo, currentTodo.dueDate]);
+  let currentTodo = value.find((todo) => todo.id === todoId);
+  let differenceInDays = calcDate(currentTodo.dueDate);
+  console.log(todoid);
   return (
     <div className={`Todo ${isComplete && "done"}`}>
       <div className="header">
@@ -59,15 +37,22 @@ export default function Todo({
             width={10}
             height={10}
           />
-          <h1>{currentTodo.taskName}</h1>
+          <h1>
+            <Link to={`/todos/${currentTodo.id.toString()}`}>
+              {currentTodo.taskName}
+            </Link>
+          </h1>
         </div>
 
         <div className="options" style={{ display: "flex", gap: "1rem" }}>
-          <Edit handleEditTodo={handleEditTodo} />
+          <Link to={`/todos/edit/${currentTodo.id}`}>
+            <Edit />
+          </Link>
+
           <Check markComplete={markComplete} />
         </div>
       </div>
-      <div className="body" onClick={() => handleClick(todo.id)}>
+      <div className="body">
         <p className="info-text">
           <Calendar />
           <span className={`info-span`}>Due Date:</span>{" "}
