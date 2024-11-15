@@ -1,14 +1,6 @@
-import { useEffect } from "react";
 import "../search/Search.css";
-export default function Search({ search, setSearch, todos, setSearchedTodos }) {
-  function handleSearch(e) {
-    setSearch(e.target.value);
-  }
 
-  useEffect(() => {
-    setSearchedTodos(todos.filter((todo) => todo.taskName === search));
-  }, [search, todos, setSearchedTodos]);
-
+export default function Search({ search, setSearch }) {
   return (
     <form action="" className="Search">
       <div className="input-wrapper">
@@ -16,7 +8,9 @@ export default function Search({ search, setSearch, todos, setSearchedTodos }) {
         <input
           type="search"
           placeholder="Search..."
-          onChange={handleSearch}
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
           value={search}
         />
       </div>
