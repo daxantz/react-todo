@@ -6,11 +6,10 @@ import Move from "../icons/Move";
 import Edit from "../icons/Edit";
 import Check from "../icons/Check";
 import Circle from "../circle/Circle";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { calcDate, TodoContext } from "../../../../utils";
 const tagColors = ["#ECFFE8", "#FFF6E8", "#E8FEFF"];
 export default function Todo({ todoId }) {
-  const { todoid } = useParams();
   const { value } = useContext(TodoContext);
   const [isComplete, setIsComplete] = useState(false);
 
@@ -20,7 +19,7 @@ export default function Todo({ todoId }) {
 
   let currentTodo = value.find((todo) => todo.id === todoId);
   let differenceInDays = calcDate(currentTodo.dueDate);
-  console.log(todoid);
+
   return (
     <div className={`Todo ${isComplete && "done"}`}>
       <div className="header">
