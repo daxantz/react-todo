@@ -32,28 +32,12 @@ export default function TaskDetails() {
           <SubtaskItem key={task.id} subtask={task} />
         ))}
       </div>
-      <button
-        className="btn"
-        style={{
-          padding: "18px 137px",
-          backgroundColor: "#0D99FF",
-          color: "white",
-          borderRadius: "90px",
-          border: "none",
-        }}
-      >
+      <button className="btn">
         <Refresh />
-        <span style={{ marginLeft: "10px" }}>Repeat Task</span>
+        <span>Repeat Task</span>
       </button>
       <button
-        className="btn"
-        style={{
-          padding: "18px 137px",
-          backgroundColor: "#FFE0DE",
-
-          borderRadius: "90px",
-          border: "none",
-        }}
+        className="delete-btn btn"
         onClick={() => deleteTodo(currentTodo.id)}
       >
         <Delete /> Delete Task
