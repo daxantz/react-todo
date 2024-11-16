@@ -1,31 +1,22 @@
-const sortOptions = [
-  { name: "Default", value: "default" },
-  { name: "Ascending Date", value: "dueDate" },
-  { name: "Descending Date", value: "dueDate" },
-  { name: "Ascending Complexity", value: "Complexity" },
-  { name: "Descending Complexity", value: "Complexity" },
-  { name: "Ascending Priority", value: "Priority" },
-  { name: "Descending Priority", value: "Priority" },
-];
-const filterOptions = [{ name: "tag1" }, { name: "tag2" }];
+import { Link } from "react-router-dom";
 import Search from "../components/search/Search";
-import Dropdown from "../components/dropdown/Dropdown";
-import MenuItem from "../components/dropdown/MenuItem";
+
 import Todo from "../components/todo/Todo";
-import TaskDetails from "./TaskDetails";
-import { useState } from "react";
-import CreateTask from "./CreateTask";
-import Form from "../components/form/Form";
-import { setSortArray } from "../../../utils";
+
+import { useContext, useState } from "react";
+
+import { setSortArray, TodoContext } from "../../../utils";
 import usePowerMode from "../hooks/usePowerMode";
-export default function MainPage({ todos, setTodos, setStoredTodos }) {
-  const [currentTodo, setCurrentTodo] = useState(null);
-  const [isCreatingTodo, setIsCreatingTodo] = useState(false);
+import useSearchTodos from "../hooks/useSearchTodos";
+import Filters from "../components/dropdown/Filters";
+
+export default function MainPage() {
+  const { value } = useContext(TodoContext);
+  const { search, setSearch, searchedTodos } = useSearchTodos();
   const [selectedValue, setSelectedValue] = useState();
-  const [tempTodos, setTempTodos] = useState([...todos]);
-  const [search, setSearch] = useState("");
-  const [searchedTodos, setSearchedTodos] = useState([...todos]);
-  const [urgentTodo, setPowerMode, clearUrgentTodo] = usePowerMode(todos);
+  const [tempTodos, setTempTodos] = useState([...value]);
+
+  const [urgentTodo, setPowerMode, clearUrgentTodo] = usePowerMode(value);
   function handleChange(event) {
     setSelectedValue(event.target.value);
 
@@ -33,145 +24,48 @@ export default function MainPage({ todos, setTodos, setStoredTodos }) {
       return setSortArray(
         event.target.value,
         event.target.id.split(" ")[0],
-        todos
+        value
       );
     });
     console.log("temp todos", tempTodos);
   }
+  function getTodosToDisplay() {
+    //if user searchs for a todo or uses the dropdown to filter the appropriate array will be returned , original todos array returned if no use action
+    const hasSearchedTodos = searchedTodos.length > 0;
+    const hasSelectedValue = selectedValue !== undefined;
 
-  function handleToggle() {
-    setIsCreatingTodo((previous) => !previous);
-  }
+    if (hasSearchedTodos) return searchedTodos;
+    if (hasSelectedValue) return tempTodos;
 
-  function handleClick(id) {
-    const currentTodo = todos.find((todo) => todo.id === id);
-    setCurrentTodo(currentTodo);
-    console.log("the current todo is : ", currentTodo);
-  }
-
-  function resetTodo() {
-    setCurrentTodo(null);
+    return value;
   }
 
   return (
     <>
-      {currentTodo ? (
-        <TaskDetails
-          todo={currentTodo}
-          handleToggle={resetTodo}
-          setTodos={setTodos}
-          resetTodo={resetTodo}
-          todos={todos}
-        />
-      ) : isCreatingTodo ? (
-        <CreateTask>
-          <Form
-            setTodos={setTodos}
-            backToMain={handleToggle}
-            setStoredTodos={setStoredTodos}
-          />
-        </CreateTask>
-      ) : (
-        <>
-          <Search
-            search={search}
-            setSearch={setSearch}
-            searchTodos={searchedTodos}
-            setSearchedTodos={setSearchedTodos}
-            todos={todos}
-          />
-          <div
-            className="filters"
-            style={{ display: "flex", justifyContent: "space-around" }}
-          >
-            <Dropdown title={"Sort"}>
-              {sortOptions.map((option) => (
-                <MenuItem
-                  key={option.name}
-                  option={option}
-                  type={"radio"}
-                  handleChange={handleChange}
-                />
-              ))}
-            </Dropdown>
-            <Dropdown title={"Filter"} handleChange={handleChange}>
-              {filterOptions.map((option) => (
-                <MenuItem key={option.name} option={option} type={"checkbox"} />
-              ))}
-            </Dropdown>
-          </div>
-          {urgentTodo ? (
-            <Todo todo={urgentTodo} todoId={urgentTodo.id} />
-          ) : (
-            <div className="todos">
-              {searchedTodos.length > 0
-                ? searchedTodos.map((todo) => (
-                    <Todo
-                      key={todo.id}
-                      todo={todo}
-                      handleClick={handleClick}
-                      todoId={todo.id}
-                      setTodos={setTodos}
-                    />
-                  ))
-                : selectedValue
-                ? tempTodos.map((todo) => (
-                    <Todo
-                      key={todo.id}
-                      todo={todo}
-                      handleClick={handleClick}
-                      todoId={todo.id}
-                      setTodos={setTodos}
-                    />
-                  ))
-                : todos.map((todo) => (
-                    <Todo
-                      key={todo.id}
-                      todo={todo}
-                      handleClick={handleClick}
-                      todoId={todo.id}
-                      setTodos={setTodos}
-                    />
-                  ))}
-            </div>
-          )}
+      <Search search={search} setSearch={setSearch} />
+      <Filters handleChange={handleChange} />
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-            }}
-          >
-            <button
-              className="btn"
-              style={{
-                padding: "18px 137px",
-                backgroundColor: "#0D99FF",
-                color: "white",
-                borderRadius: "90px",
-                border: "none",
-              }}
-              onClick={handleToggle}
-            >
-              + Add New Task
-            </button>
-            <button
-              onClick={!urgentTodo ? setPowerMode : clearUrgentTodo}
-              className="btn"
-              style={{
-                padding: "18px 137px",
-                backgroundColor: "#0D99FF",
-                color: "white",
-                borderRadius: "90px",
-                border: "none",
-              }}
-            >
-              {!urgentTodo ? "Power Mode On" : "Power Mode Off"}
-            </button>
-          </div>
-        </>
+      {urgentTodo ? (
+        <Todo todoId={urgentTodo.id} />
+      ) : (
+        <div className="todos">
+          {getTodosToDisplay().map((todo) => (
+            <Todo key={todo.id} todoId={todo.id} />
+          ))}
+        </div>
       )}
+
+      <div className="btn-container">
+        <button className="btn">
+          <Link to="/newtodo"> + Add New Task</Link>
+        </button>
+        <button
+          onClick={!urgentTodo ? setPowerMode : clearUrgentTodo}
+          className="btn"
+        >
+          {!urgentTodo ? "Power Mode On" : "Power Mode Off"}
+        </button>
+      </div>
     </>
   );
 }
