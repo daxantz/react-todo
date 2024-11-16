@@ -7,7 +7,7 @@ import EditForm from "./components/form/EditForm.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { TodoContext } from "../../utils.js";
-import "../src/styles.css";
+import "./styles.css";
 function App() {
   const [value, setValue] = useLocalStorage("todos", []);
   const router = createBrowserRouter([
