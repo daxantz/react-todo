@@ -5,6 +5,33 @@ body {
 }
 
 .Edit,
-.btn .Check:hover {
+.btn .Check {
   cursor: pointer;
+}
+
+.btn {
+  padding: 18px 137px;
+  background-color: #0d99ff;
+  color: white;
+  border-radius: 90px;
+  border: none;
+}
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-btn {
+  background-color: #ecb5b1;
+  color: black;
+}
+
+button.btn > span {
+  margin-left: 10px;
 }
