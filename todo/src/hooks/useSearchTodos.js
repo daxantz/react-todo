@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { TodoContext } from "../../../utils";
+
+import { TodoContext } from "../contexts/todoContext";
 
 export default function useSearchTodos() {
-  const { value } = useContext(TodoContext);
+  const { todos } = useContext(TodoContext);
   const [search, setSearch] = useState("");
   const [searchedTodos, setSearchedTodos] = useState([]);
 
   useEffect(() => {
-    setSearchedTodos(value.filter((todo) => todo.taskName === search));
-  }, [search, value, setSearchedTodos]);
+    setSearchedTodos(todos.filter((todo) => todo.taskName === search));
+  }, [search, todos, setSearchedTodos]);
 
   return { search, setSearch, searchedTodos };
 }
