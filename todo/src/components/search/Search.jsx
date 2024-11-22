@@ -1,6 +1,14 @@
+import { useContext, useEffect, useState } from "react";
 import "../search/Search.css";
+import { TodoContext } from "../../contexts/todoContext";
 
-export default function Search({ search, setSearch }) {
+export default function Search() {
+  const [query, setQuery] = useState("");
+  const { findTodos } = useContext(TodoContext);
+  useEffect(() => {
+    const timeout = setTimeout(() => findTodos(query), 300);
+    return () => clearTimeout(timeout);
+  }, [query, findTodos]);
   return (
     <form action="" className="Search">
       <div className="input-wrapper">
@@ -9,9 +17,9 @@ export default function Search({ search, setSearch }) {
           type="search"
           placeholder="Search..."
           onChange={(e) => {
-            setSearch(e.target.value);
+            setQuery(e.target.value);
           }}
-          value={search}
+          value={query}
         />
       </div>
     </form>
