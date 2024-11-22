@@ -2,10 +2,10 @@ import { useContext, useState } from "react";
 import LevelSelector from "../levelselector/LevelSelector";
 import Pageheader from "../pageheader/Pageheader";
 import "../form/Form.css";
-import { TodoContext } from "../../../../utils";
+import { TodoContext } from "../../contexts/todoContext";
 import { useNavigate } from "react-router-dom";
 export default function Form() {
-  const { setValue } = useContext(TodoContext);
+  const { createTodo } = useContext(TodoContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     taskName: "",
@@ -16,30 +16,12 @@ export default function Form() {
     tags: "",
   });
 
-  function createTodo(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     console.log(formData);
-    setValue((prevTodos) => {
-      return [
-        ...prevTodos,
-        {
-          id: Date.now(),
-          taskName: formData.taskName,
-          Priority: formData.Priority,
-          Complexity: formData.Complexity,
-          dueDate: formData.dueDate,
-          time: formData.time,
-          tags: formData.tags.split(","),
-          subtasks: [
-            // { text: "st1", id: 1 },
-            // { text: "st2", id: 2 },
-          ],
-          urgency: formData.Complexity + formData.Priority,
-          isCompleted: false,
-        },
-      ];
-    });
+    createTodo(formData);
+
     setFormData({
       taskName: "",
       Priority: null,
@@ -61,7 +43,7 @@ export default function Form() {
   }
 
   return (
-    <form className="Form" action="" onSubmit={(e) => createTodo(e)}>
+    <form className="Form" action="" onSubmit={(e) => handleSubmit(e)}>
       <Pageheader title={"Add New Task"} backToMain={navigate} />
       <div className="name-input">
         <label htmlFor="taskName">Task Name</label>
