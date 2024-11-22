@@ -6,18 +6,15 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Delete from "../components/icons/Delete";
 import Refresh from "../components/icons/Refresh";
-import { TodoContext } from "../../../utils";
+import { TodoContext } from "../contexts/todoContext";
 export default function TaskDetails() {
   const navigate = useNavigate();
   const { todoid } = useParams();
-  const { value, setValue } = useContext(TodoContext);
-  let currentTodo = value.find((todo) => todo.id === Number(todoid));
+  const { todos, deleteTodo } = useContext(TodoContext);
+  let currentTodo = todos.find((todo) => todo.id === Number(todoid));
   console.log(currentTodo);
-  function deleteTodo(id) {
-    setValue((prevTodos) => {
-      const filteredTodos = prevTodos.filter((todo) => todo.id !== id);
-      return filteredTodos;
-    });
+  function handleDelete(id) {
+    deleteTodo(id);
     navigate(-1);
   }
 
@@ -38,7 +35,7 @@ export default function TaskDetails() {
       </button>
       <button
         className="delete-btn btn"
-        onClick={() => deleteTodo(currentTodo.id)}
+        onClick={() => handleDelete(currentTodo.id)}
       >
         <Delete /> Delete Task
       </button>
