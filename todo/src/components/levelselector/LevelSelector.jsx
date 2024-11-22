@@ -14,17 +14,15 @@ export default function LevelSelector({ level = 10, setLevel, name }) {
       <p>Select {name} level</p>
       <div className="levels">
         {Array.from({ length: level }).map((level, index) => (
-          <>
-            <Circle
-              key={index}
-              level={index + 1}
-              color={currentLevel === index + 1 ? "#0D99FF" : "#0D99FF1A"}
-              handleSelect={handleSelect}
-              currentLevel={currentLevel}
-              name={name}
-              setLevel={setLevel}
-            />
-          </>
+          <Circle
+            key={index}
+            level={index + 1}
+            color={currentLevel === index + 1 ? "#0D99FF" : "#0D99FF1A"}
+            handleSelect={handleSelect}
+            currentLevel={currentLevel}
+            name={name}
+            setLevel={setLevel}
+          />
         ))}
       </div>
     </div>
