@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import "../todo/Todo.css";
 import Up from "../icons/Up";
 import Calendar from "../icons/Calendar";
@@ -7,21 +7,19 @@ import Edit from "../icons/Edit";
 import Check from "../icons/Check";
 import Circle from "../circle/Circle";
 import { Link } from "react-router-dom";
-import { calcDate, TodoContext } from "../../../../utils";
+import { calcDate } from "../../../../utils";
+import { TodoContext } from "../../contexts/todoContext";
 const tagColors = ["#ECFFE8", "#FFF6E8", "#E8FEFF"];
 export default function Todo({ todoId }) {
-  const { value } = useContext(TodoContext);
-  const [isComplete, setIsComplete] = useState(false);
-
+  const { todos, completeTodo } = useContext(TodoContext);
+  let currentTodo = todos.find((todo) => todo.id === todoId);
+  let differenceInDays = calcDate(currentTodo.dueDate);
   function markComplete() {
-    setIsComplete((previous) => !previous);
+    completeTodo(todoId);
   }
 
-  let currentTodo = value.find((todo) => todo.id === todoId);
-  let differenceInDays = calcDate(currentTodo.dueDate);
-
   return (
-    <div className={`Todo ${isComplete && "done"}`}>
+    <div className={`Todo ${currentTodo.isCompleted && "done"}`}>
       <div className="header">
         <div className="todo-name">
           <Circle
