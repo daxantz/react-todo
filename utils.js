@@ -40,5 +40,3 @@ export function calcDate(duedate) {
   const differenceInDays = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
   return differenceInDays;
 }
-
-export const TodoContext = createContext(undefined);
