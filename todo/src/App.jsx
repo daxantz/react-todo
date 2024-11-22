@@ -5,11 +5,10 @@ import Form from "./components/form/Form.jsx";
 import TaskDetails from "./pages/TaskDetails.jsx";
 import EditForm from "./components/form/EditForm.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import useLocalStorage from "./hooks/useLocalStorage";
-import { TodoContext } from "../../utils.js";
+
+import { TodoProvider } from "./contexts/todoContext.jsx";
 import "./styles.css";
 function App() {
-  const [value, setValue] = useLocalStorage("todos", []);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -36,9 +35,9 @@ function App() {
   return (
     <>
       <Wrapper>
-        <TodoContext.Provider value={{ value, setValue }}>
+        <TodoProvider>
           <RouterProvider router={router} />
-        </TodoContext.Provider>
+        </TodoProvider>
       </Wrapper>
     </>
   );
