@@ -5,11 +5,11 @@ import "../form/Form.css";
 import { TodoContext } from "../../contexts/todoContext";
 import { useNavigate, useParams } from "react-router-dom";
 export default function EditForm() {
-  const { value, setValue } = useContext(TodoContext);
+  const { todos, setValue } = useContext(TodoContext);
   const { todoid } = useParams();
-  const currentTodo = value.find((t) => t.id === Number(todoid));
+  const currentTodo = todos.find((t) => t.id === Number(todoid));
   const navigate = useNavigate();
-  console.log(currentTodo);
+
   const [formData, setFormData] = useState({
     id: Number(todoid),
     taskName: currentTodo.taskName,
@@ -29,7 +29,7 @@ export default function EditForm() {
       urgency: formData.Complexity + formData.Priority,
       isCompleted: null,
     };
-    console.log("updated form data", updateFormData);
+
     setValue((prevTodos) => {
       return prevTodos.map((t) => {
         if (t.id === Number(todoid)) {
