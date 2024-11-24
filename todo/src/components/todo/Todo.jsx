@@ -9,13 +9,21 @@ import Circle from "../circle/Circle";
 import { Link } from "react-router-dom";
 import { calcDate } from "../../../../utils";
 import { TodoContext } from "../../contexts/todoContext";
+import Progress from "../progressbar/Progress";
 const tagColors = ["#ECFFE8", "#FFF6E8", "#E8FEFF"];
-export default function Todo({ todoId }) {
+export default function Todo({ todoId, page }) {
   const { todos, completeTodo } = useContext(TodoContext);
 
   let currentTodo = todos.find((todo) => todo.id === todoId);
   if (!currentTodo) return <div>Todo not found</div>;
   let differenceInDays = calcDate(currentTodo.dueDate);
+  let totalSubtasks = currentTodo.subtasks.length;
+  let completedSubtasks = currentTodo.subtasks.filter(
+    (task) => task.isCompleted === true
+  );
+  let percentageCompleted = Math.floor(
+    (completedSubtasks.length / totalSubtasks) * 100
+  );
   function markComplete() {
     completeTodo(todoId);
   }
@@ -85,25 +93,28 @@ export default function Todo({ todoId }) {
             : "Medium"}{" "}
           {`(${currentTodo.Complexity}/10)`}
         </p>
-        <div className="tags">
-          {currentTodo.tags ? (
-            currentTodo.tags.map((tag) => (
-              <span
-                style={{
-                  backgroundColor: `${
-                    tagColors[Math.floor(Math.random() * tagColors.length)]
-                  }`,
-                }}
-                className="tag"
-                key={tag}
-              >
-                {tag}
-              </span>
-            ))
-          ) : (
-            <span>No tags available</span>
-          )}
-        </div>
+        {page === "details" && <Progress progress={percentageCompleted} />}
+        {page === "main" && (
+          <div className="tags">
+            {currentTodo.tags ? (
+              currentTodo.tags.map((tag) => (
+                <span
+                  style={{
+                    backgroundColor: `${
+                      tagColors[Math.floor(Math.random() * tagColors.length)]
+                    }`,
+                  }}
+                  className="tag"
+                  key={tag}
+                >
+                  {tag}
+                </span>
+              ))
+            ) : (
+              <span>No tags available</span>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
