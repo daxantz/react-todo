@@ -6,7 +6,6 @@ export default function LevelSelector({ level = 10, setLevel, name }) {
 
   function handleSelect(e) {
     setCurrentLevel(parseInt(e.target.id));
-    console.log(e.target.id);
   }
 
   return (
