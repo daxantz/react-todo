@@ -36,6 +36,38 @@ export const TodoProvider = ({ children }) => {
     );
   }
 
+  function completeSubtask(currentTodoId, subtaskId) {
+    setTodos((todos) => {
+      return todos.map((t) =>
+        t.id === currentTodoId
+          ? {
+              ...t,
+              subtasks: t.subtasks.map((task) =>
+                task.id === subtaskId
+                  ? { ...task, isCompleted: !task.isCompleted }
+                  : task
+              ),
+            }
+          : t
+      );
+    });
+  }
+
+  function repeatTask(currentTodoId) {
+    setTodos((todos) => {
+      return todos.map((t) =>
+        t.id === currentTodoId
+          ? {
+              ...t,
+              subtasks: t.subtasks.map((task) => {
+                return { ...task, isCompleted: false };
+              }),
+            }
+          : t
+      );
+    });
+  }
+
   function filterTodos(direction, property) {
     if (direction === "Ascending") {
       setTodos((todos) => {
@@ -72,6 +104,8 @@ export const TodoProvider = ({ children }) => {
         filterTodos,
         findTodos,
         searchTodos,
+        completeSubtask,
+        repeatTask,
       }}
     >
       {children}
