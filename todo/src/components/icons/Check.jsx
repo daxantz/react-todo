@@ -9,7 +9,13 @@ export default function Check({ markComplete, isCompleted }) {
       xmlns="http://www.w3.org/2000/svg"
       onClick={markComplete}
     >
-      <circle cx="16" cy="16" r="16" fill="#0D99FF" fillOpacity="0.1" />
+      <circle
+        cx="16"
+        cy="16"
+        r="16"
+        fill={!isCompleted ? "#0D99FF" : "green"}
+        fillOpacity="0.1"
+      />
       <path
         d="M22 11.5L13.75 19.75L10 16"
         stroke="#717171"
