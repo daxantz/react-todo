@@ -1,0 +1,9 @@
+.Progress {
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+  progress {
+    width: 100%;
+  }
+}
