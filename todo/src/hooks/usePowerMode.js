@@ -9,9 +9,9 @@ export default function usePowerMode(todos) {
       if (index < todos.length - 1) {
         let nextTodo = todos[index + 1];
 
-        if (todo.urgency < nextTodo.urgency) {
-          console.log(nextTodo);
-          high = todo;
+        if (todo.urgency < nextTodo.urgency && nextTodo.isCompleted === false) {
+          high = nextTodo;
+          console.log(high.isCompleted);
         }
       }
     });
