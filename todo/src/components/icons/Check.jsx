@@ -1,7 +1,7 @@
-export default function Check({ markComplete }) {
+export default function Check({ markComplete, isCompleted }) {
   return (
     <svg
-      className="Check"
+      className={`Check ${isCompleted && "completed"}`}
       width="32"
       height="32"
       viewBox="0 0 32 32"
