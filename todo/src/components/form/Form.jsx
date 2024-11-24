@@ -6,6 +6,7 @@ import { TodoContext } from "../../contexts/todoContext";
 import { useNavigate } from "react-router-dom";
 export default function Form() {
   const { createTodo } = useContext(TodoContext);
+  const [subtasks, setSubtasks] = useState([]);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     taskName: "",
@@ -13,14 +14,14 @@ export default function Form() {
     Complexity: "",
     dueDate: "",
     time: "",
+
     tags: "",
   });
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(formData);
-    createTodo(formData);
+    createTodo(formData, subtasks);
 
     setFormData({
       taskName: "",
@@ -28,6 +29,7 @@ export default function Form() {
       Complexity: null,
       dueDate: "",
       time: "",
+
       tags: "",
     });
     navigate(-1);
@@ -83,10 +85,11 @@ export default function Form() {
           />
         </div>
       </div>
-      <div className="subtaskChecklist">
-        <p>Add Checklist for subtask</p>
-        <div className="list"></div>
-      </div>
+      <CheckList
+        subtasks={subtasks}
+        setSubtasks={setSubtasks}
+        setFormData={setFormData}
+      />
       <div className="tags">
         <label htmlFor="tags">Add Tags</label>
         <input
@@ -100,5 +103,55 @@ export default function Form() {
       </div>
       <button>Save Task</button>
     </form>
+  );
+}
+
+function CheckList({ subtasks, setSubtasks }) {
+  const [taskText, setTaskText] = useState("");
+  function addSubtask(e) {
+    e.preventDefault();
+    setSubtasks((subtasks) => {
+      console.log(subtasks);
+      return [
+        ...subtasks,
+        { id: Date.now(), text: taskText, isCompleted: false },
+      ];
+    });
+    setTaskText("");
+  }
+  function removeSubtask(e, id) {
+    e.preventDefault();
+    setSubtasks((tasks) => {
+      console.log(tasks);
+      return tasks.filter((task) => task.id !== id);
+    });
+  }
+
+  return (
+    <div className="subtaskChecklist">
+      <p>Add Checklist for subtask</p>
+
+      <div className="list">
+        <ul>
+          {subtasks.map((task) => (
+            <div key={task.id} className="input-container">
+              <input type="text" name="" id="" readOnly value={task.text} />
+              <button onClick={(e) => removeSubtask(e, task.id)}>X</button>
+            </div>
+          ))}
+        </ul>
+      </div>
+      <div className="input-container">
+        <input
+          type="text"
+          name=""
+          id=""
+          placeholder="Add New Subtask..."
+          value={taskText}
+          onChange={(e) => setTaskText(e.target.value)}
+        />
+        <button onClick={addSubtask}>+</button>
+      </div>
+    </div>
   );
 }
