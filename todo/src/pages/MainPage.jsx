@@ -17,12 +17,16 @@ export default function MainPage() {
       <Filters />
 
       {urgentTodo ? (
-        <Todo todoId={urgentTodo.id} />
+        <Todo todoId={urgentTodo.id} page={"main"} />
       ) : (
         <div className="todos">
           {searchTodos
-            ? searchTodos.map((todo) => <Todo key={todo.id} todoId={todo.id} />)
-            : todos.map((todo) => <Todo key={todo.id} todoId={todo.id} />)}
+            ? searchTodos.map((todo) => (
+                <Todo key={todo.id} todoId={todo.id} page={"main"} />
+              ))
+            : todos.map((todo) => (
+                <Todo key={todo.id} todoId={todo.id} page={"main"} />
+              ))}
         </div>
       )}
 
