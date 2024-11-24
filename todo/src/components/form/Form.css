@@ -27,6 +27,24 @@
     }
   }
 
+  .subtaskChecklist {
+    .input-container {
+      position: relative;
+      input {
+        width: 95%;
+        padding: 1.5rem 0.95rem;
+      }
+      button {
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        width: 10%;
+        border-radius: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
   .tags {
     display: flex;
     flex-direction: column;
