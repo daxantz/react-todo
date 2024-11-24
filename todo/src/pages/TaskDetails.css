@@ -1,0 +1,31 @@
+.subtaskChecklist {
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .input-container {
+    position: relative;
+    input {
+      width: 100%;
+      padding: 1.5rem 0.95rem;
+      border-radius: 2rem;
+      border: none;
+    }
+    .Check {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      width: 10%;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background-color: #deecf6;
+      padding: 1rem;
+      border: none;
+    }
+  }
+  .completed {
+    background-color: blue;
+  }
+}
