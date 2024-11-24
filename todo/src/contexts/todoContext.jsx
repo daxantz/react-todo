@@ -5,7 +5,7 @@ export const TodoContext = createContext(undefined);
 export const TodoProvider = ({ children }) => {
   const [todos, setTodos] = useLocalStorage("todos", []);
   const [searchTodos, setSearchTodos] = useState([]);
-  function createTodo(formData) {
+  function createTodo(formData, subtasks) {
     const newTodos = [
       ...todos,
       {
@@ -16,10 +16,7 @@ export const TodoProvider = ({ children }) => {
         dueDate: formData.dueDate,
         time: formData.time,
         tags: formData.tags.split(","),
-        subtasks: [
-          // { text: "st1", id: 1 },
-          // { text: "st2", id: 2 },
-        ],
+        subtasks: subtasks,
         urgency: formData.Complexity + formData.Priority,
         isCompleted: false,
       },
