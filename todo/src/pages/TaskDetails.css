@@ -20,12 +20,11 @@
       width: 10%;
       border-radius: 50%;
       transform: translateY(-50%);
-      background-color: #deecf6;
       padding: 1rem;
       border: none;
     }
-  }
-  .completed {
-    background-color: blue;
+    .Check:hover {
+      cursor: pointer;
+    }
   }
 }
