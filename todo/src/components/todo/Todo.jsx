@@ -12,7 +12,9 @@ import { TodoContext } from "../../contexts/todoContext";
 const tagColors = ["#ECFFE8", "#FFF6E8", "#E8FEFF"];
 export default function Todo({ todoId }) {
   const { todos, completeTodo } = useContext(TodoContext);
+
   let currentTodo = todos.find((todo) => todo.id === todoId);
+  if (!currentTodo) return <div>Todo not found</div>;
   let differenceInDays = calcDate(currentTodo.dueDate);
   function markComplete() {
     completeTodo(todoId);
