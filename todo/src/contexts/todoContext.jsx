@@ -5,23 +5,47 @@ export const TodoContext = createContext(undefined);
 export const TodoProvider = ({ children }) => {
   const [todos, setTodos] = useLocalStorage("todos", []);
   const [searchTodos, setSearchTodos] = useState([]);
+  const [filters, setFilters] = useState([]);
+  const [filteredTodos, setFilteredTodos] = useState([]);
+
   function createTodo(formData, subtasks) {
-    const newTodos = [
-      ...todos,
-      {
-        id: Date.now(),
-        taskName: formData.taskName,
-        Priority: formData.Priority,
-        Complexity: formData.Complexity,
-        dueDate: formData.dueDate,
-        time: formData.time,
-        tags: formData.tags.split(","),
-        subtasks: subtasks,
-        urgency: formData.Complexity + formData.Priority,
-        isCompleted: false,
-      },
-    ];
+    const newTodo = {
+      id: Date.now(),
+      taskName: formData.taskName,
+      Priority: formData.Priority,
+      Complexity: formData.Complexity,
+      dueDate: formData.dueDate,
+      time: formData.time,
+      tags: formData.tags.split(","),
+      subtasks: subtasks,
+      urgency: formData.Complexity + formData.Priority,
+      isCompleted: false,
+    };
+    setFilters((filters) => {
+      const newTags = newTodo.tags.filter(
+        (tag) => !filters.some((filter) => filter === tag)
+      );
+
+      if (newTags.length === 0) {
+        return filters;
+      }
+
+      // Create new objects for the tags and concatenate with existing filters
+      return [...filters, ...newTags];
+    });
+    const newTodos = [...todos, newTodo];
     setTodos(newTodos);
+  }
+  function onFilterChange(activeTags) {
+    if (activeTags.length === 0) {
+      setFilteredTodos([]);
+    } else {
+      setFilteredTodos(
+        todos.filter((todo) =>
+          todo.tags.some((tag) => activeTags.includes(tag))
+        )
+      );
+    }
   }
 
   function deleteTodo(id) {
@@ -68,7 +92,7 @@ export const TodoProvider = ({ children }) => {
     });
   }
 
-  function filterTodos(direction, property) {
+  function sortTodos(direction, property) {
     if (direction === "Ascending") {
       setTodos((todos) => {
         return todos.toSorted((a, b) => a[property] - b[property]);
@@ -84,7 +108,7 @@ export const TodoProvider = ({ children }) => {
 
   function findTodos(query) {
     if (query.trim() === "") {
-      setSearchTodos(todos); // Show all todos when the query is empty
+      setSearchTodos([]); // Show all todos when the query is empty
     } else {
       setSearchTodos(
         todos.filter((todo) =>
@@ -101,11 +125,16 @@ export const TodoProvider = ({ children }) => {
         createTodo,
         deleteTodo,
         completeTodo,
-        filterTodos,
+        sortTodos,
         findTodos,
         searchTodos,
         completeSubtask,
         repeatTask,
+        filters,
+        setFilters,
+        onFilterChange,
+
+        filteredTodos,
       }}
     >
       {children}
