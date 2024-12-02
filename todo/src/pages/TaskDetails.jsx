@@ -28,16 +28,17 @@ export default function TaskDetails() {
 
       <div className="subtaskChecklist">
         <h2>Checklist for subtasks</h2>
-        {currentTodo.subtasks.map((task) => (
-          <div key={task.id} className="input-container">
-            <input type="text" name="" id="" readOnly value={task.text} />
+        {currentTodo &&
+          currentTodo.subtasks.map((task) => (
+            <div key={task.id} className="input-container">
+              <input type="text" name="" id="" readOnly value={task.text} />
 
-            <Check
-              isCompleted={task.isCompleted}
-              markComplete={() => completeSubtask(currentTodo.id, task.id)}
-            />
-          </div>
-        ))}
+              <Check
+                isCompleted={task.isCompleted}
+                markComplete={() => completeSubtask(currentTodo.id, task.id)}
+              />
+            </div>
+          ))}
       </div>
 
       <button className="btn" onClick={() => repeatTask(currentTodo.id)}>
