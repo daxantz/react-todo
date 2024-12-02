@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Dropdown from "./Dropdown";
 import MenuItem from "./MenuItem";
 import { TodoContext } from "../../contexts/todoContext";
@@ -12,9 +12,21 @@ const sortOptions = [
   { name: "Descending Priority", value: "Priority" },
 ];
 
-const filterOptions = [{ name: "tag1" }, { name: "tag2" }];
 export default function Filters() {
-  const { filterTodos } = useContext(TodoContext);
+  const { sortTodos, filters, onFilterChange } = useContext(TodoContext);
+  const [activeTags, setActiveTags] = useState([]);
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    setActiveTags((prev) =>
+      checked ? [...prev, value] : prev.filter((tag) => tag !== value)
+    );
+    onFilterChange(
+      checked
+        ? [...activeTags, value]
+        : activeTags.filter((tag) => tag !== value)
+    );
+  };
+
   return (
     <div className="filters">
       <Dropdown title={"Sort"}>
@@ -24,20 +36,26 @@ export default function Filters() {
             option={option}
             type={"radio"}
             handleChange={(event) =>
-              filterTodos(event.target.id.split(" ")[0], event.target.value)
+              sortTodos(event.target.id.split(" ")[0], event.target.value)
             }
           />
         ))}
       </Dropdown>
-      <Dropdown
-        title={"Filter"}
-        handleChange={(event) =>
-          filterTodos(event.target.id.split(" ")[0], event.target.value)
-        }
-      >
-        {filterOptions.map((option) => (
-          <MenuItem key={option.name} option={option} type={"checkbox"} />
-        ))}
+      <Dropdown title={"Filter"}>
+        {filters &&
+          filters.map((option) => (
+            // <MenuItem key={option.name} option={option} type={"checkbox"} />
+            <div className="MenuItem" key={option}>
+              <label htmlFor={option}>{option}</label>
+              <input
+                type="checkbox"
+                name={"item"}
+                id={option}
+                value={option}
+                onChange={handleCheckboxChange}
+              />
+            </div>
+          ))}
       </Dropdown>
     </div>
   );
